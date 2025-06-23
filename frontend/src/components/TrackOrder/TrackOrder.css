@@ -1,0 +1,99 @@
+.track-order-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.track-order-modal {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+}
+
+.order-number {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.tracking-timeline {
+    position: relative;
+    margin: 40px 0;
+}
+
+.timeline-step {
+    display: flex;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.step-indicator {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.connector {
+    position: absolute;
+    left: 15px;
+    top: 30px;
+    bottom: -30px;
+    width: 2px;
+    background: #eee;
+}
+
+.timeline-step.completed .step-indicator {
+    background: #4caf50;
+    color: white;
+}
+
+.timeline-step.completed .connector {
+    background: #4caf50;
+}
+
+.timeline-step.current .step-indicator {
+    background: #ff4141;
+    color: white;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h3 {
+    margin: 0;
+    color: #333;
+}
+
+.step-content p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.current-status {
+    color: #ff4141;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.estimated-delivery {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}

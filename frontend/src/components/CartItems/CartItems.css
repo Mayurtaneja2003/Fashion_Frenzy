@@ -1,0 +1,400 @@
+.cartitems {
+    max-width: 1280px; /* Match navbar width */
+    margin: 30px auto; /* Center the content and add vertical spacing */
+    padding: 0 50px; /* Add horizontal padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.cartitems hr {
+    height: 3px;
+    background: #e2e2e2;
+    border: 0;
+}
+
+.cartitems-format-main {
+    display: grid;
+    /* Adjust grid columns to match the content properly */
+    grid-template-columns: 0.5fr 1.5fr 0.5fr 0.7fr 1fr 0.7fr 0.5fr;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 0;
+    color: #454545;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 50px;
+    text-align: center; /* Center align all content */
+}
+
+.cartitems-format {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+/* Update product icon styling */
+.cartitems-product-icon {
+    height: 45px;
+    width: auto;
+    object-fit: cover;
+    margin: 0 auto; /* Center the image */
+    display: block; /* Ensure margin auto works */
+    transition: transform 0.2s ease;
+}
+
+.cartitems-product-icon:hover {
+    transform: scale(1.05);
+}
+
+.cartitems-removed-icon {
+    display: none;
+}
+
+.cartitems-quantity {
+    width: 64px;
+    height: 50px;
+    border: 2px solid #ebebeb;
+    background: #fff;
+}
+
+.cartitems-quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+}
+
+/* Update quantity buttons styling */
+.quantity-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    background: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+}
+
+.quantity-btn:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+.quantity-btn:active {
+    background: #eee;
+    transform: scale(0.95);
+}
+
+.quantity-number {
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Update remove button styling */
+.remove-btn {
+    border: none;
+    background: none;
+    color: #ff4141;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.2s ease;
+}
+
+.remove-btn:hover {
+    color: #ff0000;
+    transform: scale(1.1);
+}
+
+.remove-btn:active {
+    transform: scale(0.95);
+}
+
+.cart-size {
+    font-weight: 500;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.cartitems-down {
+    display: flex;
+    margin-top: 50px;
+    gap: 40px;
+    justify-content: space-between;
+    position: relative;
+}
+
+.cartitems-total {
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    position: sticky;
+    top: 20px;
+}
+
+.cartitems-total-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0px;
+}
+
+.cartitems-total-button {
+    width: 262px;
+    height: 58px;
+    outline: none;
+    border: none;
+    background:black;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cartitems-promocode {
+    flex: 1;
+    max-width: 504px;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+}
+
+.cartitems-promocode p {
+    color: #555;
+}
+
+.cartitems-promobox {
+    width: 504px;
+    margin-top: 15px;
+    height: 58px;
+    background: #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    overflow: hidden;
+}
+
+/* Update promo code submit button */
+.cartitems-promobox button {
+    width: 170px;
+    height: 58px;
+    font-size: 16px;
+    background: #000000;
+    color: white;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.cartitems-promobox button:hover {
+    background: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.cartitems-promobox input {
+    flex: 1;
+    height: 100%;
+    padding: 0 20px;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    outline: none;
+}
+
+.cartitems-promobox button:active {
+    transform: translateY(0);
+}
+
+/* Update promo code apply button styling */
+.apply-promo-btn {
+    width: 100px;
+    height: 40px;
+    font-size: 14px;
+    background: #000000;
+    color: white;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.apply-promo-btn:hover {
+    background: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.apply-promo-btn:active {
+    transform: translateY(0);
+}
+
+/* Style promo code text */
+.promo-code {
+    font-weight: 700;
+    font-size: 16px;
+    color: #000;
+    letter-spacing: 0.5px;
+}
+
+/* Update promo code item layout */
+.promo-code-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.promo-code-item:hover {
+    background-color: #f9f9f9;
+}
+
+.promo-code-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.promo-description {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Style the applied promo code container */
+.applied-promo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+    background: #f8f8f8;
+}
+
+.applied-promo-text {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Style the remove button for applied promo */
+.applied-promo button {
+    width: auto;
+    height: 40px;
+    padding: 0 20px;
+    font-size: 14px;
+    background: #ff4141;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: auto; /* Push button to the right */
+}
+
+.applied-promo button:hover {
+    background: #ff2c2c;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.applied-promo button:active {
+    transform: translateY(0);
+}
+
+/* Add checkout button styling */
+.checkout-btn {
+    width: 100%;
+    height: 58px;
+    font-size: 16px;
+    background: #000000;
+    color: white;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.checkout-btn:hover {
+    background: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.checkout-btn:active {
+    transform: translateY(0);
+}
+
+.error-message {
+    color: #dc2626;
+    background-color: #fee2e2;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.placeorder-btn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+@media(max-width: 1024px) {
+    .checkout-btn {
+        height: 50px;
+        font-size: 14px;
+    }
+}
+
+@media(max-width: 700px) {
+    .checkout-btn {
+        height: 45px;
+        font-size: 13px;
+    }
+}
+
+@media(max-width: 500px) {
+    .cartitems-format-main {
+        display: none;
+        grid-template-columns: 0.5fr 3fr 0.5fr;
+        gap: 10px;
+    }
+
+    .cartitems-format {
+        display: grid;
+    }
+}
+
+/* Style scrollbar for promo codes list */
+.promo-codes-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.promo-codes-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.promo-codes-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.promo-codes-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@media(max-width:1280px) {
+    .cartitems {
+        padding: 0 30px;
+    }
+}

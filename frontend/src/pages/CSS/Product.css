@@ -1,0 +1,34 @@
+.product-actions {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.add-to-cart, .buy-now {
+    padding: 15px 30px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-to-cart {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.buy-now {
+    background-color: #ff4141;
+    color: white;
+    border: none;
+}
+
+.add-to-cart:hover {
+    background-color: #e4e4e4;
+}
+
+.buy-now:hover {
+    background-color: #ff2020;
+}
