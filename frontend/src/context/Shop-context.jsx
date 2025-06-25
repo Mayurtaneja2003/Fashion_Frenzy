@@ -1,6 +1,20 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-export const ShopContext = createContext();
+export const ShopContext = createContext({
+    products: [],
+    cartItems: {},
+    cartSizes: {},
+    appliedPromoCode: null,
+    promoDiscount: 0,
+    isLoading: true,
+    orderCount: 0,
+    cartCount: 0,
+    incrementCartCount: () => {},
+    updateCartCount: () => {},
+    getTotalCartItems: () => 0,
+    getDefaultCart: () => ({}),
+    resetPromoCode: () => {},
+});
 
 export const ShopContextProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
@@ -89,6 +103,11 @@ export const ShopContextProvider = ({ children }) => {
         incrementCartCount,
         updateCartCount,
         getTotalCartItems,
+        getDefaultCart: () => ({}),
+        resetPromoCode: () => {
+            setAppliedPromoCode(null);
+            setPromoDiscount(0);
+        },
         getTotalCartAmount: () => {
             let total = 0;
             for (const [cartKey, quantity] of Object.entries(cartItems)) {

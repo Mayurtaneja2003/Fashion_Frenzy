@@ -56,6 +56,12 @@ const orderSchema = new mongoose.Schema({
         default: function() {
             return new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
         }
+    },
+    promoCode: {
+        type: String
+    },
+    promoDiscount: {
+        type: Number
     }
 });
 

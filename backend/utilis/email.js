@@ -34,6 +34,32 @@ const templates = {
                 <p>Best regards,<br>Fashion Frenzy Team</p>
             </div>
         `
+    }),
+    orderConfirmation: (data) => ({
+        subject: 'Order Confirmation - Fashion Frenzy',
+        html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2>Thank you for your order, ${data.name}!</h2>
+                <p>Your order <strong>#${data.orderNumber}</strong> has been placed successfully.</p>
+                <p><strong>Order Details:</strong></p>
+                <ul>
+                    ${data.items.map(item => `<li>${item.name} (Size: ${item.size}) x ${item.quantity} - $${item.price}</li>`).join('')}
+                </ul>
+                <p><strong>Total:</strong> $${data.total}</p>
+                <p>We will notify you when your order is shipped.</p>
+                <p>Best regards,<br>Fashion Frenzy Team</p>
+            </div>
+        `
+    }),
+    loginNotification: (data) => ({
+        subject: 'Login Notification - Fashion Frenzy',
+        html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2>Hello ${data.name},</h2>
+                <p>Your account was just logged in. If this wasn't you, please reset your password immediately.</p>
+                <p>Best regards,<br>Fashion Frenzy Team</p>
+            </div>
+        `
     })
 };
 

@@ -2,7 +2,7 @@ import React, { useState, useCallback, memo } from 'react';
 import { API_URL } from '../../config/api'; // <-- see next fix
 import './OrderDetails.css';
 
-const OrderDetails = ({ order, onClose, onOrderUpdated }) => {
+const OrderDetails = ({ order, onClose, onOrderUpdated, availablePromoCodes }) => {
     const handleModalClick = useCallback((e) => {
         e.stopPropagation();
     }, []);
@@ -37,6 +37,15 @@ const OrderDetails = ({ order, onClose, onOrderUpdated }) => {
             alert('Failed to cancel order. Please try again.');
         }
     };
+
+    const defaultPromoCodes = {
+        'WELCOME10': { discount: 10, description: '10% off on your first order' },
+        'SUMMER20': { discount: 20, description: '20% off on summer collection' },
+        'SPECIAL15': { discount: 15, description: '15% off on all items' }
+        // ...add all codes you use
+    };
+
+    const promoCodes = availablePromoCodes || defaultPromoCodes;
 
     return (
         <div 
@@ -138,20 +147,34 @@ const OrderDetails = ({ order, onClose, onOrderUpdated }) => {
                     </div>
 
                     <div className="order-summary">
-                        <h3>Order Summary</h3>
                         <div className="summary-row subtotal">
                             <span>Subtotal</span>
-                            <span>${subtotal.toFixed(2)}</span>
+                            <span>
+                              ${order.items
+                                ? order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)
+                                : '0.00'}
+                            </span>
                         </div>
                         <div className="summary-row shipping">
                             <span>Shipping</span>
-                            <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
+                            <span>{order.total && order.total < 100 ? '$2.00' : 'Free'}</span>
                         </div>
+                        {order.promoCode && order.promoDiscount > 0 && (
+                            <div className="summary-row discount">
+                                <span>
+                                    Discount
+                                    {promoCodes[order.promoCode]
+                                        ? ` (${promoCodes[order.promoCode].discount}%)`
+                                        : ''}
+
+                                </span>
+                                <span>- ${order.promoDiscount.toFixed(2)}</span>
+                            </div>
+                        )}
                         <div className="summary-row total">
                             <span>Total</span>
                             <span>${order.total ? order.total.toFixed(2) : '0.00'}</span>
                         </div>
-                        <p><strong>Payment Method:</strong> {order.paymentMethod === 'online' ? 'Online Payment' : 'Cash on Delivery'}</p>
                     </div>
                 </div>
             </div>

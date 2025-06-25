@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const orderController = require('../controllers/orderController');
 const auth = require('../middleware/auth');
+const orderController = require('../controllers/orderController');
 
 router.post('/place-order', auth, orderController.placeOrder); // Changed from /place to /place-order
 router.get('/count', auth, orderController.getOrderCount);

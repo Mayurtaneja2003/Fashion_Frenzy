@@ -18,6 +18,7 @@ const cartRoutes = require('./routes/cart');
 const contactRoutes = require('./routes/contact');
 const subscriptionRoutes = require('./routes/subscription');
 const analyticsRoutes = require('./routes/analytics');
+const addressRoutes = require('./routes/address');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -62,6 +63,7 @@ app.use('/api', cartRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/subscription', subscriptionRoutes);
 app.use('/api', analyticsRoutes);
+app.use('/api/address', addressRoutes);
 
 // Add this route for cart data
 app.get('/getcart', auth, async (req, res) => {
@@ -105,6 +107,18 @@ app.post('/upload', upload.single('product'), (req, res) => {
     const image_url = `http://localhost:4000/images/${req.file.filename}`;
     res.json({ success: true, image_url });
 });
+
+// Example for /subscribe
+// app.post('/subscribe', async (req, res) => {
+//     // handle newsletter subscription logic here
+//     res.json({ success: true });
+// });
+
+// // Example for /contact
+// app.post('/contact', async (req, res) => {
+//     // handle contact form logic here
+//     res.json({ success: true });
+// });
 
 // Database connection
 connectDB();

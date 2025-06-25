@@ -2,6 +2,8 @@
     max-width: 1280px;
     margin: 40px auto;
     padding: 0 20px;
+    background: #f6f8fa;
+    min-height: 100vh;
 }
 
 .checkout-container h1 {
@@ -17,99 +19,121 @@
 }
 
 .checkout-form-section {
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background: #fff;
+    padding: 40px 32px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    margin-bottom: 32px;
+    border: 1.5px solid #eaeaea;
 }
 
 .checkout-form-section h2 {
-    margin-bottom: 25px;
-    color: #333;
+    margin-bottom: 30px;
+    color: #1a1a1a;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .form-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
-    color: #555;
-    font-weight: 500;
+    margin-bottom: 10px;
+    color: #222;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.2px;
 }
 
 .form-group input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
+    padding: 14px 14px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1.08rem;
+    background: #fafbfc;
+    transition: border-color 0.3s;
 }
 
 .form-group input:focus {
-    border-color: #000;
+    border-color: #3b82f6;
     outline: none;
+    background: #fff;
 }
 
-.payment-section {
-    margin: 30px 0;
+.payment-section h2{
+    margin: 28px 0 12px 0;
+    color: #1a1a1a;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
 .payment-options {
     display: flex;
-    gap: 30px;
-    margin-top: 15px;
+    gap: 36px;
+    margin-top: 10px;
 }
 
 .payment-option {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    font-weight: 500;
+    font-size: 1.05rem;
     cursor: pointer;
+    padding: 6px 0;
 }
 
 .payment-option input[type="radio"] {
-    cursor: pointer;
+    accent-color: #2563eb;
+    width: 18px;
+    height: 18px;
 }
 
 .place-order-btn {
     width: 100%;
-    padding: 16px;
-    background: #000;
-    color: white;
+    padding: 18px;
+    background: #111; /* Black background */
+    color: #fff;
     border: none;
-    border-radius: 4px;
-    font-size: 18px;
-    font-weight: 600;
+    border-radius: 8px;
+    font-size: 1.15rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
+    margin-top: 28px;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: background 0.2s, transform 0.2s;
 }
 
 .place-order-btn:hover {
-    background: #1a1a1a;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: #222; /* Slightly lighter black on hover */
+    transform: translateY(-2px) scale(1.01);
 }
 
 .order-summary {
-    padding: 20px;
+    padding: 28px 22px;
     background: #f8f8f8;
-    border-radius: 8px;
+    border-radius: 14px;
     margin-top: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
 
 .order-summary h2 {
-    margin-bottom: 25px;
-    color: #333;
+    margin-bottom: 22px;
+    color: #1a1a1a;
+    font-size: 1.25rem;
+    font-weight: 700;
 }
 
 .order-items {
@@ -216,11 +240,46 @@
     color: #333;
 }
 
+/* Address Type Buttons */
+.form-group .flex {
+    gap: 24px; /* More space between buttons */
+}
+
+.form-group .flex button {
+    border: 1.5px solid #e0e0e0;
+    background: #fafbfc;
+    color: #222;
+    font-weight: 500;
+    font-size: 1rem;
+    border-radius: 6px;
+    padding: 10px 22px;
+    transition: all 0.2s;
+    cursor: pointer;
+    margin-bottom: 4px;
+    box-shadow: none;
+    outline: none;
+}
+
+.form-group .flex button:hover:not(.selected) {
+    background: #f3f4f6;
+    color: #111;
+    border-color: #bbb;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.form-group .flex button.selected,
+.form-group .flex button.bg-blue-500 {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    transform: scale(1.04);
+}
+
 @media (max-width: 1024px) {
     .checkout-content {
         grid-template-columns: 1fr;
     }
-
     .order-summary {
         order: -1;
     }
@@ -229,14 +288,20 @@
 @media (max-width: 768px) {
     .checkout-container {
         margin: 20px auto;
+        padding: 0 6px;
     }
-
+    .checkout-form-section {
+        padding: 18px 6px;
+    }
+    .order-summary {
+        padding: 16px 6px;
+    }
     .form-row {
         grid-template-columns: 1fr;
+        gap: 12px;
     }
-
     .payment-options {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
     }
 }

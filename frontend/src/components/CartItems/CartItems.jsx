@@ -19,7 +19,8 @@ const CartItems = () => {
         setPromoDiscount,
         addToCart,         // Add these functions from context
         removeFromCart,    // Add these functions from context
-        handleRemoveItem   // Add these functions from context
+        handleRemoveItem,  // Add these functions from context
+        resetPromoCode     // Add resetPromoCode function from context
     } = useContext(ShopContext);
 
     const [promoCode, setPromoCode] = useState('');
@@ -36,6 +37,13 @@ const CartItems = () => {
     const handlePromoCodeApply = (code) => {
         if (!localStorage.getItem('auth-token')) {
             setPromoMessage('Please login to apply promo code');
+            return;
+        }
+
+        // Check if cart is empty
+        const hasItems = Object.values(cartItems).some(qty => qty > 0);
+        if (!hasItems) {
+            setPromoMessage('Add items to cart before applying a promo code');
             return;
         }
 
@@ -80,6 +88,17 @@ const CartItems = () => {
         navigate(`/product/${productId}`);
     };
 
+    useEffect(() => {
+        const hasItems = Object.values(cartItems).some(qty => qty > 0);
+        if (!hasItems && appliedPromoCode) {
+            resetPromoCode();
+        }
+        // Clear promo message if cart is empty or promo code is removed
+        if (!hasItems || !appliedPromoCode) {
+            setPromoMessage('');
+        }
+    }, [cartItems, appliedPromoCode, resetPromoCode]);
+
     return (
         <div className='cartitems'>
             <div className="cartitems-format-main">
@@ -98,7 +117,16 @@ const CartItems = () => {
                 
                 if (!product) return null;
 
-                const sizePrice = product.new_price; // Assuming new_price is the base price
+                // Calculate price based on size
+                const basePrice = product.new_price;
+                const sizePrice = {
+                    'S': basePrice,
+                    'M': basePrice + 5,
+                    'L': basePrice + 10,
+                    'XL': basePrice + 15,
+                    'XXL': basePrice + 20,
+                }[itemSize] || basePrice;
+
                 const totalPrice = sizePrice * quantity;
 
                 return (

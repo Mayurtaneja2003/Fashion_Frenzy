@@ -13,7 +13,7 @@ const NewsLetter = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:4000/subscribe', {
+            const response = await fetch('http://localhost:4000/api/subscription', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { sendEmail } = require('../utilis/email');
 
 exports.signup = async (req, res) => {
     try {
@@ -23,6 +24,14 @@ exports.signup = async (req, res) => {
             cartData: cart
         });
         await user.save();
+
+        // Send welcome email to user
+        await sendEmail({
+            to: user.email,
+            subject: 'Welcome to Fashion Frenzy!',
+            template: 'newsletterWelcome',
+            data: { email: user.email }
+        });
 
         const data = {
             user: {
@@ -59,6 +68,14 @@ exports.login = async (req, res) => {
                 errors: "Wrong password"
             });
         }
+
+        // After successful login
+        await sendEmail({
+            to: user.email,
+            subject: 'Login Notification - Fashion Frenzy',
+            template: 'loginNotification',
+            data: { name: user.name }
+        });
 
         const data = {
             user: {

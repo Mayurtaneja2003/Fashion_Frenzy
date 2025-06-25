@@ -25,7 +25,20 @@ const userSchema = new mongoose.Schema({
     orderCount: {
         type: Number,
         default: 0
-    }
+    },
+    savedAddresses: [
+        {
+            category: { type: String, enum: ['home', 'office', 'other'], required: true },
+            address: { type: String, required: true },
+            city: String,
+            state: String,
+            zipCode: String,
+            phone: String,
+            name: String,
+            default: { type: Boolean, default: false },
+            saved: { type: Boolean, default: false } // <-- add this
+        }
+    ]
 });
 
 module.exports = mongoose.model('Users', userSchema);

@@ -86,7 +86,12 @@ const OrderHistory = () => {
                             {order.items.map((item, index) => (
                                 <div key={index} className="order-item">
                                     <div className="item-image">
-                                        <img src={item.image} alt={item.name} />
+                                        <img 
+                                            src={item.image} 
+                                            alt={item.name} 
+                                            style={{ cursor: 'pointer' }} 
+                                            onClick={() => navigate(`/product/${item.productId}`)} 
+                                        />
                                     </div>
                                     <div className="item-details">
                                         <h3>{item.name}</h3>
@@ -105,15 +110,21 @@ const OrderHistory = () => {
                                 <div className="summary-row subtotal">
                                     <span>Subtotal</span>
                                     <span>
-                                        ${order.items
-                                            ? order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)
-                                            : '0.00'}
+                                      ${order.items
+                                          ? order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)
+                                          : '0.00'}
                                     </span>
                                 </div>
                                 <div className="summary-row shipping">
                                     <span>Shipping</span>
                                     <span>{order.total && order.total < 100 ? '$2.00' : 'Free'}</span>
                                 </div>
+                                {order.promoCode && order.promoDiscount > 0 && (
+                                    <div className="summary-row discount">
+                                        <span>Discount ({order.promoCode}):</span>
+                                        <span>- ${order.promoDiscount.toFixed(2)}</span>
+                                    </div>
+                                )}
                                 <div className="summary-row total">
                                     <span>Total</span>
                                     <span>${order.total ? order.total.toFixed(2) : '0.00'}</span>

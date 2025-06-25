@@ -19,6 +19,12 @@ const StripePayment = ({ amount, onSuccess, onError, customerInfo }) => {
         setPaymentError(null);
 
         try {
+            if (!customerInfo.email) {
+                setPaymentError('Please enter your email address.');
+                setIsProcessing(false);
+                return;
+            }
+
             // Create payment intent
             const response = await fetch('http://localhost:4000/api/orders/create-payment-intent', {
                 method: 'POST',
@@ -26,9 +32,9 @@ const StripePayment = ({ amount, onSuccess, onError, customerInfo }) => {
                     'Content-Type': 'application/json',
                     'auth-token': localStorage.getItem('auth-token')
                 },
-                body: JSON.stringify({ 
-                    amount,
-                    email: customerInfo.email 
+                body: JSON.stringify({
+                    amount: amount,
+                    email: customerInfo.email // <-- Make sure this is NOT empty!
                 }),
             });
 
