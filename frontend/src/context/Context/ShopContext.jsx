@@ -149,8 +149,7 @@ const ShopContextProvider = (props) => {
           })
               .then((response) => response.json())
               .then((data) => {
-                  // Replace console.logs with proper error handling
-                  const defaultCart = getDefaultCart();
+                    const defaultCart = getDefaultCart();
                   const defaultSizes = {};
                   for (const itemId in data) {
                       defaultCart[itemId] = data[itemId].quantity;

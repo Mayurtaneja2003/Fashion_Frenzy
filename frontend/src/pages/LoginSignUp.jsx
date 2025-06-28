@@ -36,8 +36,7 @@ const LoginSignUp = () => {
   };
 
   const login = async () => {
-    console.log("Login Function Executed", formData);
-    let responseData;
+     let responseData;
     await fetch('http://localhost:4000/api/auth/login',{
       method:'POST',
       headers:{
@@ -56,8 +55,7 @@ const LoginSignUp = () => {
   };
 
   const signup = async () => {
-    console.log("Signup Function Executed", formData);
-    let responseData;
+     let responseData;
     await fetch('http://localhost:4000/api/auth/signup',{
       method:'POST',
       headers:{

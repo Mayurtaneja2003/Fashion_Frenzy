@@ -18,8 +18,7 @@ const AddressSelector = ({ selectedCategory, onSelect, onAddNew, onSetDefault })
         .then(res => res.json())
         .then(data => {
             setAddresses(data.addresses || []);
-            console.log('Fetched addresses:', data.addresses);
-        });
+           });
 }, []);
 
   const handleSetDefault = async (cat) => {

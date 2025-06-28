@@ -111,7 +111,6 @@ const AddProduct = () => {
                 }
             }
         } catch (error) {
-            console.error('Error adding product:', error);
             alert('Failed to add product. Please try again.');
         } finally {
             setIsLoading(false);

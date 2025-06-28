@@ -31,3 +31,16 @@
         font-size: 10px;
     }
 }
+@media (max-width: 600px) {
+  .breadcrum {
+    padding: 8px;
+    font-size: 0.95em;
+  }
+}
+.item {
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.item:hover {
+    box-shadow: 0 8px 32px rgba(255,64,129,0.12);
+    transform: scale(1.04);
+}

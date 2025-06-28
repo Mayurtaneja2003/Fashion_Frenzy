@@ -19,7 +19,6 @@ const ShopCategory = (props) => {
                 }
                 
                 const data = await response.json();
-                console.log(`Fetched ${data.length} products for ${props.category}`);
                 setProducts(data);
             } catch (error) {
                 console.error('Error:', error);

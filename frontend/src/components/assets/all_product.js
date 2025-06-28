@@ -289,6 +289,6 @@ let all_product = [
   },
 ];
 
-// console.log("All Product Data:", all_product);
+
 
 export default all_product;

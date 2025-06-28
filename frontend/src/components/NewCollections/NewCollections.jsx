@@ -18,8 +18,7 @@ const NewCollections = () => {
                 }
                 
                 const data = await response.json();
-                console.log('Fetched new collections:', data);
-                setNew_collection(data);
+                 setNew_collection(data);
             } catch (error) {
                 console.error('Error:', error);
                 setError('Failed to load new collections');

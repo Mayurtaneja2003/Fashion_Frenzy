@@ -103,6 +103,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    background: linear-gradient(120deg, #fde1ff 0%, #e1ffea22 100%);
 }
 
 .contact-modal {
@@ -165,4 +166,17 @@
         padding: 20px;
         width: 95%;
     }
+}
+
+@media (max-width: 600px) {
+  .contact-modal {
+    width: 98vw;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 1em;
+    padding: 10px;
+  }
 }

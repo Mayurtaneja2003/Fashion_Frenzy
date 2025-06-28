@@ -59,8 +59,7 @@
 }
 
 .timeline-step.completed .step-indicator {
-    background: #4caf50;
-    color: white;
+    background: linear-gradient(90deg, #4caf50 0%, #ff4141 100%);
 }
 
 .timeline-step.completed .connector {
@@ -70,6 +69,7 @@
 .timeline-step.current .step-indicator {
     background: #ff4141;
     color: white;
+    box-shadow: 0 0 0 4px #ff414133;
 }
 
 .step-content {
@@ -96,4 +96,11 @@
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid #eee;
+}
+@media (max-width: 600px) {
+  .track-order-modal {
+    width: 98vw;
+    padding: 10px;
+    border-radius: 8px;
+  }
 }

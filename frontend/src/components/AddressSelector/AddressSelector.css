@@ -1,8 +1,22 @@
 .address-card {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  transition: box-shadow 0.2s, border-color 0.2s;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 2px solid #e0e0e0;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.address-card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-  border-color: #3b82f6;
+.address-card:hover, .address-card.selected, .address-card.bg-blue-50 {
+  border-color: #ff4141 !important;
+  box-shadow: 0 8px 32px rgba(255,64,129,0.12);
+}
+@media (max-width: 600px) {
+  .address-card {
+    min-width: 90vw !important;
+    max-width: 98vw !important;
+    padding: 8px !important;
+    border-radius: 8px !important;
+  }
+  .add-address-form {
+    padding: 8px !important;
+    border-radius: 8px !important;
+  }
 }

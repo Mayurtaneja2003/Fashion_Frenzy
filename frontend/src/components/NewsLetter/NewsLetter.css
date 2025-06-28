@@ -148,6 +148,17 @@
         width: 130px;
     }
 }
+@media (max-width: 700px) {
+  .newsletter{
+    padding: 10px 2px;
+    border-radius: 8px;
+  }
+  .newsletter-input input,
+  .newsletter-input button {
+    font-size: 1em;
+    padding: 10px;
+  }
+}
 
 .subscription-status {
     margin-top: 15px;

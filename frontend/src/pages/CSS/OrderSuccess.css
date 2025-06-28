@@ -9,11 +9,12 @@
 .order-success-card {
     background: white;
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
     text-align: center;
     max-width: 500px;
     width: 100%;
+    background: linear-gradient(120deg, #e1ffea22 0%, #fde1ff 100%);
 }
 
 .success-checkmark {
@@ -23,6 +24,7 @@
     border-radius: 50%;
     background: #4caf50;
     position: relative;
+    animation: pop 0.5s;
 }
 
 .check-icon {
@@ -116,9 +118,16 @@
     background: #e0e0e0;
 }
 
+@keyframes pop {
+    0% { transform: scale(0.7); }
+    80% { transform: scale(1.2);}
+    100% { transform: scale(1);}
+}
+
 @media (max-width: 480px) {
     .order-success-card {
         padding: 20px;
+        border-radius: 8px;
     }
 
     .action-buttons {

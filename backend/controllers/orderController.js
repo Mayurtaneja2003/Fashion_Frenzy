@@ -138,7 +138,6 @@ exports.updateOrderStatus = async (req, res) => {
 
 exports.createPaymentIntent = async (req, res) => {
     const { amount, email } = req.body;
-    console.log('Stripe intent request:', { amount, email }); // <-- check your server logs!
     if (!amount || !email) {
         return res.status(400).json({ error: 'Amount and email are required' });
     }
