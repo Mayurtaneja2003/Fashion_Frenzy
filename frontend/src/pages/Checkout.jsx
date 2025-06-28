@@ -80,7 +80,7 @@ const Checkout = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': localStorage.getItem('auth-token')
+                'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
             },
             body: JSON.stringify({
                 category: formData.category,
@@ -96,7 +96,7 @@ const Checkout = () => {
         });
         // Refresh addresses
         fetch('http://localhost:4000/api/address', {
-            headers: { 'auth-token': localStorage.getItem('auth-token') }
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('auth-token')}` }
         })
             .then(res => res.json());
         setShowAddAddress(false);
@@ -214,7 +214,7 @@ const Checkout = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'auth-token': localStorage.getItem('auth-token')
+                    'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
                 },
                 body: JSON.stringify({
                     orderDetails: {
@@ -259,13 +259,21 @@ const Checkout = () => {
                 .map(([cartKey, quantity]) => {
                     const [itemId, itemSize] = cartKey.split('-');
                     const product = all_product.find(p => p.id === parseInt(itemId));
+                    const basePrice = product.new_price;
+                    const sizePrice = {
+                        'S': basePrice,
+                        'M': basePrice + 5,
+                        'L': basePrice + 10,
+                        'XL': basePrice + 15,
+                        'XXL': basePrice + 20,
+                    }[itemSize] || basePrice;
                     return {
                         productId: parseInt(itemId),
                         name: product.name,
                         image: product.image,
                         size: itemSize,
                         quantity: quantity,
-                        price: product.new_price
+                        price: sizePrice // <-- FIXED: now correct for each size!
                     };
                 });
 
@@ -273,7 +281,7 @@ const Checkout = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'auth-token': localStorage.getItem('auth-token')
+                    'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
                 },
                 body: JSON.stringify({
                     orderDetails: {
@@ -284,8 +292,8 @@ const Checkout = () => {
                     customerInfo: formData,
                     cartItems: formattedItems,
                     totalAmount,
-                    promoCode: appliedPromoCode,           // <-- add this
-                    promoDiscount: promoDiscount           // <-- and this
+                    promoCode: appliedPromoCode,
+                    promoDiscount: promoDiscount
                 }),
             });
 

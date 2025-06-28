@@ -60,6 +60,17 @@ const templates = {
                 <p>Best regards,<br>Fashion Frenzy Team</p>
             </div>
         `
+    }),
+    signupNotification: (data) => ({
+        subject: 'Welcome to Fashion Frenzy!',
+        html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2>Welcome, ${data.name}!</h2>
+                <p>Thank you for signing up at Fashion Frenzy.</p>
+                <p>We're excited to have you join our community. Start shopping and enjoy exclusive deals!</p>
+                <p>Best regards,<br>Fashion Frenzy Team</p>
+            </div>
+        `
     })
 };
 

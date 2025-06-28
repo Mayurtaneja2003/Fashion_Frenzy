@@ -18,18 +18,19 @@ exports.subscribe = async (req, res) => {
         const subscriber = new Subscriber({ email });
         await subscriber.save();
 
-        // Send welcome email
-        await sendEmail({
+        // Respond to client immediately
+        res.json({ success: true, message: 'Subscribed successfully!' });
+
+        // Send welcome email asynchronously (do not await or return)
+        sendEmail({
             to: email,
-            subject: 'Welcome to Fashion Frenzy Newsletter!',
+            subject: 'Welcome to our Newsletter!',
             template: 'newsletterWelcome',
             data: { email }
+        }).catch(err => {
+            console.error('Failed to send welcome email:', err);
         });
 
-        res.json({
-            success: true,
-            message: 'Thank you for subscribing!'
-        });
     } catch (error) {
         console.error('Subscription error:', error);
         res.status(500).json({

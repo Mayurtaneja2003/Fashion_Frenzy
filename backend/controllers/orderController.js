@@ -7,19 +7,35 @@ exports.placeOrder = async (req, res) => {
     try {
         const { orderDetails, customerInfo, cartItems, totalAmount, paymentMethod } = req.body;
 
-        // Calculate estimated delivery date: 7 days from now
-        const estimatedDeliveryDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+        // Calculate subtotal
+        const subtotal = cartItems.reduce((sum, item) => {
+            const basePrice = item.price;
+            const sizePrice = {
+                'S': basePrice,
+                'M': basePrice + 5,
+                'L': basePrice + 10,
+                'XL': basePrice + 15,
+                'XXL': basePrice + 20,
+            }[item.size] || basePrice;
+            return sum + sizePrice * item.quantity;
+        }, 0);
+
+        const shippingCost = subtotal < 100 ? 2 : 0;
+        const promoDiscount = req.body.promoDiscount || 0;
+        const total = subtotal + shippingCost - promoDiscount;
 
         // 1. Save order to DB
         const order = new Order({
             userId: req.user.id,
             orderNumber: orderDetails?.orderNumber || Math.floor(Math.random() * 1000000),
             items: cartItems,
-            total: totalAmount,
+            subtotal,
+            shippingCost,
+            promoDiscount,
+            total,
             status: 'Processing',
             customerInfo: customerInfo,
             date: new Date(),
-            estimatedDeliveryDate,
             paymentMethod: paymentMethod || 'cod',
             paymentId: orderDetails?.paymentId || null,
             promoCode: req.body.promoCode,
@@ -92,10 +108,11 @@ exports.getOrderCount = async (req, res) => {
 
 exports.getUserOrders = async (req, res) => {
     try {
-        const orders = await Order.find({ userId: req.user.id }).sort({ date: -1 });
+        // Sort by createdAt descending (newest first)
+        const orders = await Order.find({ userId: req.user.id }).sort({ createdAt: -1 });
         res.json({ success: true, orders });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Failed to fetch orders" });
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 };
 

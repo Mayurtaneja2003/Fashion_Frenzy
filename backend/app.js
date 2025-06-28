@@ -9,6 +9,25 @@ const User = require('./models/User');      // Add this line
 const Product = require('./models/Product'); // Import Product model
 const multer = require('multer');
 const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Cloudinary storage for multer
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'fashion_frenzy_products', // Your folder name in Cloudinary
+    allowed_formats: ['jpg', 'jpeg', 'png'],
+  },
+});
+const upload = multer({ storage: storage });
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -26,34 +45,15 @@ const port = process.env.PORT || 4000;
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'http://localhost:5173'
-    ],
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'auth-token', 'Access-Control-Allow-Credentials']
+  origin: ['http://localhost:3000', 'http://localhost:5173'], // Allow both frontend and admin
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization', 'auth-token'],
 }));
 
 // Static files
 app.use("/assets", express.static(path.join(__dirname, "../frontend/src/components/assets")));
 app.use('/images', express.static('upload/images'));
 app.use('/products', express.static('uploads'));
-
-// Set up multer for image uploads
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const dir = './upload/images';
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir, { recursive: true });
-        }
-        cb(null, dir);
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
-});
-const upload = multer({ storage: storage });
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -97,14 +97,19 @@ app.get('/newcollections', async (req, res) => {
     }
 });
 
+// Replace your upload route:
 app.post('/upload', upload.single('product'), (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ success: false, message: 'No file uploaded' });
-    }
-    const image_url = `http://localhost:4000/images/${req.file.filename}`;
-    res.json({ success: true, image_url });
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: 'No file uploaded' });
+  }
+  res.json({ success: true, image_url: req.file.path });
 });
 
+// Add this error handler after all routes:
+app.use((err, req, res, next) => {
+  console.error('Upload error:', err);
+  res.status(500).json({ success: false, message: 'Server error', error: err.message });
+});
 
 // Database connection
 connectDB();

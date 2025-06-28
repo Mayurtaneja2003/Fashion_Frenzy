@@ -63,6 +63,6 @@ const orderSchema = new mongoose.Schema({
     promoDiscount: {
         type: Number
     }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);

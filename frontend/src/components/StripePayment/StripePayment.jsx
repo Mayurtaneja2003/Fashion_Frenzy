@@ -30,11 +30,11 @@ const StripePayment = ({ amount, onSuccess, onError, customerInfo }) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'auth-token': localStorage.getItem('auth-token')
+                    'Authorization': `Bearer ${localStorage.getItem('auth-token')}` // <-- fix here
                 },
                 body: JSON.stringify({
                     amount: amount,
-                    email: customerInfo.email // <-- Make sure this is NOT empty!
+                    email: customerInfo.email
                 }),
             });
 

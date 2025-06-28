@@ -23,7 +23,7 @@ const OrderDetails = ({ order, onClose, onOrderUpdated, availablePromoCodes }) =
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'auth-token': localStorage.getItem('auth-token')
+                    'Authorization': `Bearer ${localStorage.getItem('auth-token')}` // <-- fix here
                 }
             });
             const data = await response.json();
@@ -79,7 +79,8 @@ const OrderDetails = ({ order, onClose, onOrderUpdated, availablePromoCodes }) =
                                 <span className={`status-badge ${order.status.toLowerCase()}`}>
                                     {order.status}
                                 </span>
-                            </p>
+                            </p>                           
+                            <p><strong>Payment Method:</strong> {order.paymentMethod ? order.paymentMethod.toUpperCase() : 'N/A'}</p>
                         </div>
                         {/* Only show Cancel button if not Cancelled or Delivered */}
                         {(order.status !== 'Cancelled' && order.status !== 'Delivered') && (
@@ -149,7 +150,7 @@ const OrderDetails = ({ order, onClose, onOrderUpdated, availablePromoCodes }) =
                     <div className="order-summary">
                         <div className="summary-row subtotal">
                             <span>Subtotal</span>
-                            <span>
+                              <span>
                               ${order.items
                                 ? order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)
                                 : '0.00'}
@@ -157,7 +158,12 @@ const OrderDetails = ({ order, onClose, onOrderUpdated, availablePromoCodes }) =
                         </div>
                         <div className="summary-row shipping">
                             <span>Shipping</span>
-                            <span>{order.total && order.total < 100 ? '$2.00' : 'Free'}</span>
+                             <span>{order.total && order.total < 100 ? '$2.00' : 'Free'}</span>
+                            {/* <span>
+                              {order.shippingCost !== undefined
+                                ? (order.shippingCost === 0 ? 'Free' : `$${order.shippingCost.toFixed(2)}`)
+                                : (order.total && order.total < 100 ? '$2.00' : 'Free')}
+                            </span> */}
                         </div>
                         {order.promoCode && order.promoDiscount > 0 && (
                             <div className="summary-row discount">
@@ -173,7 +179,20 @@ const OrderDetails = ({ order, onClose, onOrderUpdated, availablePromoCodes }) =
                         )}
                         <div className="summary-row total">
                             <span>Total</span>
-                            <span>${order.total ? order.total.toFixed(2) : '0.00'}</span>
+                            <span>
+                              ${(() => {
+                                // Subtotal
+                                const subtotal = order.items
+                                  ? order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+                                  : 0;
+                                // Shipping
+                                const shipping = order.total && order.total < 100 ? 2 : 0;
+                                // Discount
+                                const discount = order.promoDiscount || 0;
+                                // Total calculation
+                                return (subtotal + shipping - discount).toFixed(2);
+                              })()}
+                            </span>
                         </div>
                     </div>
                 </div>

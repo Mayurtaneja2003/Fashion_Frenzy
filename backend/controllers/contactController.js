@@ -42,3 +42,22 @@ exports.submitContact = async (req, res) => {
         });
     }
 };
+
+exports.contact = async (req, res) => {
+    try {
+        // Respond to client immediately
+        res.json({ success: true, message: "Thank you for contacting us!" });
+
+        // Send email asynchronously (do not await)
+        sendEmail({
+            to: process.env.ADMIN_EMAIL,
+            subject: 'New Contact Form Submission',
+            template: 'contactNotification',
+            data: req.body
+        }).catch((err) => {
+            console.error('Contact email failed:', err);
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+};

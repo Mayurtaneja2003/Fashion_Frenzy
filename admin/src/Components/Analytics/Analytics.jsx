@@ -49,7 +49,7 @@ const Analytics = () => {
             const response = await fetch(`http://localhost:4000/api/analytics/${period}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'auth-token': localStorage.getItem('auth-token')
+                    'Authorization': `Bearer ${localStorage.getItem('auth-token')}` // Use Authorization header
                 }
             });
             const data = await response.json();

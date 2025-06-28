@@ -36,41 +36,44 @@ const LoginSignUp = () => {
   };
 
   const login = async () => {
-     let responseData;
-    await fetch('http://localhost:4000/api/auth/login',{
+    const res = await fetch('http://localhost:4000/api/auth/login', {
       method:'POST',
       headers:{
         Accept: 'application/form-data',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
-    }).then((response)=> response.json()).then((data)=> responseData=data)
-    if(responseData.success){
-      localStorage.setItem('auth-token',responseData.token);
-      window.location.replace("/"); 
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.message || 'Login failed');
+      return;
     }
-    else{
-      alert(responseData.errors);
-    }
+    alert('Login successful!');
+    localStorage.setItem('auth-token',data.token);
+    window.location.replace("/"); 
   };
 
   const signup = async () => {
-     let responseData;
-    await fetch('http://localhost:4000/api/auth/signup',{
-      method:'POST',
-      headers:{
-        Accept: 'application/form-data',
+    const res = await fetch('http://localhost:4000/api/auth/signup', {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData),
-    }).then((response)=> response.json()).then((data)=> responseData=data)
-    if(responseData.success){
-      localStorage.setItem('auth-token',responseData.token);
-      window.location.replace("/"); 
+      body: JSON.stringify({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.message || 'Signup failed');
+      return;
     }
-    else{
-      alert(responseData.errors);
-    }
+    alert(data.message); // or handle success
+    localStorage.setItem('auth-token',data.token);
+    window.location.replace("/"); 
   };
 
   return (

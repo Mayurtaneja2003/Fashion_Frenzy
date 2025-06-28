@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const { sendEmail } = require('../utilis/email');
 
@@ -20,17 +21,25 @@ exports.signup = async (req, res) => {
         const user = new User({
             name: req.body.username,
             email: req.body.email,
-            password: req.body.password,
+            password: req.body.password, // <-- plain, let pre-save hook hash it
             cartData: cart
         });
         await user.save();
 
         // Send welcome email to user
+        // await sendEmail({
+        //     to: user.email,
+        //     subject: 'Welcome to Fashion Frenzy!',
+        //     template: 'newsletterWelcome',
+        //     data: { email: user.email }
+        // });
+
+        // Send signup email
         await sendEmail({
             to: user.email,
             subject: 'Welcome to Fashion Frenzy!',
-            template: 'newsletterWelcome',
-            data: { email: user.email }
+            template: 'signupNotification',
+            data: { name: user.name, email: user.email } // <-- pass name here
         });
 
         const data = {
@@ -46,50 +55,36 @@ exports.signup = async (req, res) => {
             token: token
         });
     } catch (error) {
-        console.error(error);
+        console.error("Signup error:", error); // Add this for debugging
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
 
 exports.login = async (req, res) => {
+    const { email, password } = req.body;
     try {
-        let user = await User.findOne({email: req.body.email});
-        if(!user) {
-            return res.json({
-                success: false,
-                errors: "Wrong Email ID"
-            });
-        }
+        const user = await User.findOne({ email });
+        if (!user) return res.status(401).json({ message: 'Invalid credentials' });
 
-        const passCompare = user.password === req.body.password;
-        if(!passCompare) {
-            return res.json({
-                success: false,
-                errors: "Wrong password"
-            });
-        }
+        // Compare password using bcrypt
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
 
-        // After successful login
+        // Send login email
         await sendEmail({
             to: user.email,
             subject: 'Login Notification - Fashion Frenzy',
             template: 'loginNotification',
-            data: { name: user.name }
+            data: { name: user.name, email: user.email }
         });
 
-        const data = {
-            user: {
-                id: user.id
-            }
-        }
+        // Create JWT token
+        const data = { user: { id: user.id } };
         const token = jwt.sign(data, process.env.JWT_SECRET);
-        res.json({
-            success: true,
-            message: "User logged in successfully",
-            token: token
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: "Server error" });
+
+        // Return token and user info
+        res.json({ success: true, token, user });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
     }
 };

@@ -17,7 +17,7 @@ const OrderHistory = () => {
         try {
             const response = await fetch(`${API_URL}/api/orders/my-orders`, {
                 headers: {
-                    'auth-token': localStorage.getItem('auth-token')
+                    'Authorization': `Bearer ${localStorage.getItem('auth-token')}`
                 }
             });
             const data = await response.json();
@@ -110,56 +110,75 @@ const OrderHistory = () => {
                                 <div className="summary-row subtotal">
                                     <span>Subtotal</span>
                                     <span>
-                                      ${order.items
-                                          ? order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)
-                                          : '0.00'}
+                                      ${order.items && order.items.length
+                                        ? order.items.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)
+                                        : '0.00'
+                                      }
                                     </span>
-                                </div>
-                                <div className="summary-row shipping">
+                                  </div>
+                                  <div className="summary-row shipping">
                                     <span>Shipping</span>
-                                    <span>{order.total && order.total < 100 ? '$2.00' : 'Free'}</span>
-                                </div>
-                                {order.promoCode && order.promoDiscount > 0 && (
+                                       <span>{order.total && order.total < 100 ? '$2.00' : 'Free'}</span>
+                                  </div>
+                                  {order.promoCode && order.promoDiscount > 0 && (
                                     <div className="summary-row discount">
-                                        <span>Discount ({order.promoCode}):</span>
-                                        <span>- ${order.promoDiscount.toFixed(2)}</span>
+                                      <span>Discount ({order.promoCode}):</span>
+                                      <span>- ${order.promoDiscount.toFixed(2)}</span>
                                     </div>
-                                )}
-                                <div className="summary-row total">
+                                  )}
+                                  <div className="summary-row total">
                                     <span>Total</span>
-                                    <span>${order.total ? order.total.toFixed(2) : '0.00'}</span>
+                                          <span>
+                              ${(() => {
+                                // Subtotal
+                                const subtotal = order.items
+                                  ? order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+                                  : 0;
+                                // Shipping
+                                const shipping = order.total && order.total < 100 ? 2 : 0;
+                                // Discount
+                                const discount = order.promoDiscount || 0;
+                                // Total calculation
+                                return (subtotal + shipping - discount).toFixed(2);
+                              })()}
+                            </span>
+                                  </div>
                                 </div>
-                            </div>
-                            <div className="order-actions">
-                                {order.status !== 'Delivered' ? (
+                                <div className="order-actions">
+                                    {order.status === 'Cancelled' || order.status === 'Delivered' ? (
+                                        <button 
+                                            className="buy-again"
+                                            onClick={() => {
+                                                if (order.items && order.items.length > 0) {
+                                                  navigate(`/product/${order.items[0].productId}`);
+                                                }
+                                              }}
+                                        >
+                                            Buy Again
+                                        </button>
+                                    ) : (
+                                        <button 
+                                            className="track-order"
+                                            onClick={() => {
+                                                setSelectedOrder(order);
+                                                setShowTrackOrder(true);
+                                            }}
+                                        >
+                                            Track Order
+                                        </button>
+                                    )}
                                     <button 
-                                        className="track-order"
+                                        className="view-details"
                                         onClick={() => {
                                             setSelectedOrder(order);
-                                            setShowTrackOrder(true);
+                                            setShowOrderDetails(true);
                                         }}
                                     >
-                                        Track Order
+                                        View Details
                                     </button>
-                                ) : (
-                                    <button 
-                                        className="buy-again"
-                                        onClick={() => navigate('/')}
-                                    >
-                                        Buy Again
-                                    </button>
-                                )}
-                                <button 
-                                    className="view-details"
-                                    onClick={() => {
-                                        setSelectedOrder(order);
-                                        setShowOrderDetails(true);
-                                    }}
-                                >
-                                    View Details
-                                </button>
+                                </div>
                             </div>
-                        </div>
+                      
                     </div>
                 ))}
             </div>
