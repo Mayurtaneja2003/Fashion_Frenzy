@@ -76,7 +76,7 @@ const Checkout = () => {
         }
       
         // Save address (default or just saved)
-        await fetch('http://localhost:4000/api/address', {
+        await fetch(`${process.env.REACT_APP_API_URL}/api/address`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const Checkout = () => {
             })
         });
         // Refresh addresses
-        fetch('http://localhost:4000/api/address', {
+        fetch(`${process.env.REACT_APP_API_URL}/api/address`, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('auth-token')}` }
         })
             .then(res => res.json());
@@ -210,7 +210,7 @@ const Checkout = () => {
             });
 
         try {
-            const response = await fetch('http://localhost:4000/api/orders/place-order', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/place-order`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -277,7 +277,7 @@ const Checkout = () => {
                     };
                 });
 
-            const orderResponse = await fetch('http://localhost:4000/api/orders/place-order', {
+            const orderResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/place-order`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

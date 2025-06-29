@@ -125,7 +125,7 @@ const ShopContextProvider = (props) => {
 
   useEffect(() => {
       setIsLoading(true);
-      fetch('http://localhost:4000/allproducts')
+      fetch(`${process.env.REACT_APP_API_URL}/allproducts`)
           .then((response) => response.json())
           .then((data) => {
               setAll_Product(data);
@@ -139,7 +139,7 @@ const ShopContextProvider = (props) => {
 
   useEffect(() => {
       if (localStorage.getItem('auth-token')) {
-          fetch('http://localhost:4000/getcart', {
+          fetch(`${process.env.REACT_APP_API_URL}/getcart`, {
               method: 'POST',
               headers: {
                   Accept: 'application/form-data',
@@ -232,7 +232,7 @@ const ShopContextProvider = (props) => {
         const token = localStorage.getItem('auth-token');
         if (token) {
             try {
-                const response = await fetch('http://localhost:4000/api/user/order-count', {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/order-count`, {
                     headers: {
                         'auth-token': token
                     }
@@ -259,7 +259,7 @@ const ShopContextProvider = (props) => {
   const applyPromoCode = useCallback(async (code) => {
     if (code === 'NEWBIE') {
         try {
-            const response = await fetch('http://localhost:4000/api/user/order-count', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/order-count`, {
                 headers: {
                     'auth-token': localStorage.getItem('auth-token')
                 }

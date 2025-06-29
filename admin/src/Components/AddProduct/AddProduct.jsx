@@ -55,7 +55,7 @@ const AddProduct = () => {
             const formData = new FormData();
             formData.append('product', image);
 
-            const uploadResponse = await fetch("http://localhost:4000/upload", {
+            const uploadResponse = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
                 method: "POST",
                 headers: {
                     Accept: 'application/json',
@@ -69,7 +69,7 @@ const AddProduct = () => {
                 // Fetch the latest product id from the backend
                 let newId = 1;
                 try {
-                    const res = await fetch('http://localhost:4000/api/allproducts');
+                    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/allproducts`);
                     const products = await res.json();
                     if (Array.isArray(products) && products.length > 0) {
                         newId = Math.max(...products.map(p => p.id || 0)) + 1;
@@ -84,7 +84,7 @@ const AddProduct = () => {
                     image: uploadData.image_url
                 };
 
-                const productResponse = await fetch('http://localhost:4000/api/products', {
+                const productResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/products`, {
                     method: "POST",
                     headers: {
                         'Accept': 'application/json',

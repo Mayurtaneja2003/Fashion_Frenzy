@@ -9,7 +9,7 @@ const MyOrders = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/orders', {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/orders`, {
                     headers: {
                         'auth-token': localStorage.getItem('auth-token')
                     }

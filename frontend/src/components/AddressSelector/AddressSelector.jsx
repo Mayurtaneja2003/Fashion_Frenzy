@@ -12,7 +12,7 @@ const AddressSelector = ({ selectedCategory, onSelect, onAddNew, onSetDefault })
   const [defaultAddr, setDefaultAddr] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/address', {
+    fetch(`${process.env.REACT_APP_API_URL}/api/address`, {
         headers: { 'auth-token': localStorage.getItem('auth-token') }
     })
         .then(res => res.json())
@@ -24,7 +24,7 @@ const AddressSelector = ({ selectedCategory, onSelect, onAddNew, onSetDefault })
   const handleSetDefault = async (cat) => {
     const addr = addresses.find(a => a.category === cat);
     if (!addr) return;
-    await fetch('http://localhost:4000/api/address', {
+    await fetch(`${process.env.REACT_APP_API_URL}/api/address`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const AddressSelector = ({ selectedCategory, onSelect, onAddNew, onSetDefault })
       body: JSON.stringify({ ...addr, default: true, saved: addr.saved }) // <-- always send saved!
     });
     // Refresh addresses
-    fetch('http://localhost:4000/api/address', {
+    fetch(`${process.env.REACT_APP_API_URL}/api/address`, {
       headers: { 'auth-token': localStorage.getItem('auth-token') }
     })
       .then(res => res.json())
@@ -84,12 +84,12 @@ const AddressSelector = ({ selectedCategory, onSelect, onAddNew, onSetDefault })
                 className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs"
                 onClick={async e => {
                   e.stopPropagation();
-                  await fetch(`http://localhost:4000/api/address/${addr.category}`, {
+                  await fetch(`${process.env.REACT_APP_API_URL}/api/address/${addr.category}`, {
                     method: 'DELETE',
                     headers: { 'auth-token': localStorage.getItem('auth-token') }
                   });
                   // Refresh addresses
-                  fetch('http://localhost:4000/api/address', {
+                  fetch(`${process.env.REACT_APP_API_URL}/api/address`, {
                     headers: { 'auth-token': localStorage.getItem('auth-token') }
                   })
                     .then(res => res.json())

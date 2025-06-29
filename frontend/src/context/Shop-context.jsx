@@ -35,7 +35,7 @@ export const ShopContextProvider = ({ children }) => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/allproducts');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/allproducts`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch products');
                 }
@@ -64,7 +64,7 @@ export const ShopContextProvider = ({ children }) => {
             const token = localStorage.getItem('auth-token');
             if (!token) return;
             try {
-                const res = await fetch('http://localhost:4000/api/cart/count', {
+                const res = await fetch(`${process.env.REACT_APP_API_URL}/api/cart/count`, {
                     headers: { 'auth-token': token }
                 });
                 const data = await res.json();

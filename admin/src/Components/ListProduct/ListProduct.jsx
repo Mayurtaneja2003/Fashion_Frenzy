@@ -9,7 +9,7 @@ const ListProduct = () => {
 
     const fetchInfo = async () => {
         try {
-            const response = await fetch("http://localhost:4000/api/allproducts"); // <-- FIXED
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/allproducts`); // <-- FIXED
             const data = await response.json();
             setAllProducts(data);
         } catch (error) {
@@ -23,7 +23,7 @@ const ListProduct = () => {
 
     const remove_product = async (id) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/products/${id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json"
@@ -151,7 +151,7 @@ const ListProduct = () => {
                                     className="update-btn"
                                     onClick={async () => {
                                         try {
-                                            const response = await fetch(`http://localhost:4000/api/products/${editingProduct._id}`, {
+                                            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${editingProduct._id}`, {
                                                 method: 'PUT',
                                                 headers: {
                                                     'Content-Type': 'application/json',

@@ -26,7 +26,7 @@ const StripePayment = ({ amount, onSuccess, onError, customerInfo }) => {
             }
 
             // Create payment intent
-            const response = await fetch('http://localhost:4000/api/orders/create-payment-intent', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/create-payment-intent`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

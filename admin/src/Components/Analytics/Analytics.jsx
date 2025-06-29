@@ -46,7 +46,7 @@ const Analytics = () => {
         setIsLoading(true);
         setError(null);
         try {
-            const response = await fetch(`http://localhost:4000/api/analytics/${period}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/analytics/${period}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('auth-token')}` // Use Authorization header

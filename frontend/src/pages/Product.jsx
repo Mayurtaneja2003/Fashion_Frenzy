@@ -24,7 +24,7 @@ const Product = () => {
             const fetchProduct = async () => {
                 try {
                     setLoading(true);
-                    const response = await fetch(`http://localhost:4000/api/product/${productId}`);
+                    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/product/${productId}`);
                     if (!response.ok) {
                         throw new Error('Product not found');
                     }

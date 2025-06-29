@@ -22,7 +22,7 @@ const TrackOrder = ({ order, onClose }) => {
                     const newStatus = steps[currentIndex + 1].status;
                     
                     try {
-                        const response = await fetch(`http://localhost:4000/api/orders/${order._id}/status`, {
+                        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/${order._id}/status`, {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json',
