@@ -2,8 +2,12 @@
 const Product = require('../models/Product');
 
 exports.getAllProducts = async (req, res) => {
-    const products = await Product.find({});
-    res.json(products);
+    try {
+        const products = await Product.find({});
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
 exports.getProductsByCategory = async (req, res) => {

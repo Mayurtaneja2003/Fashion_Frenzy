@@ -125,7 +125,7 @@ const ShopContextProvider = (props) => {
 
   useEffect(() => {
       setIsLoading(true);
-      fetch(`${process.env.REACT_APP_API_URL}/allproducts`)
+      fetch(`${process.env.REACT_APP_API_URL}/api/allproducts`)
           .then((response) => response.json())
           .then((data) => {
               setAll_Product(data);
