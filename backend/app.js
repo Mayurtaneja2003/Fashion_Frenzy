@@ -45,7 +45,12 @@ const port = process.env.PORT || 4000;
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173'], // Allow both frontend and admin
+  origin: [
+    'https://fashion-frenzy-wine.vercel.app', // frontend
+    'https://fashion-frenzy-vsx6.vercel.app', // admin
+    'http://localhost:3000',                  // local frontend
+    'http://localhost:5173'                   // local admin (Vite)
+  ],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization', 'auth-token'],
 }));
